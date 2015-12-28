@@ -9,7 +9,6 @@ let $filename := $entry//directory:filename
 let $path:= $entry//directory:pathname
  
  
-return xdmp:document-insert($filename, xdmp:document-get($path))
 (: Full document-insert parameter list:
   xdmp:document-insert(
      $uri as xs:string,
@@ -20,3 +19,4 @@ return xdmp:document-insert($filename, xdmp:document-get($path))
      [$forest-ids as xs:unsignedLong*]
   ) as empty-sequence()
 :)
+return xdmp:document-insert($filename, xdmp:document-get($path))
