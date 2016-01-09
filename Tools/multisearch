@@ -4,8 +4,11 @@ import sys
 from subprocess import call
 
 query=""
-
+first=True
 for arg in sys.argv: 
+   if first == True: 
+	first=False
+        continue
    query+= '"' + arg + '"' + " " 
 
 print query
