@@ -3,27 +3,44 @@
 import sys
 from subprocess import call
 
+query=""
+
 for arg in sys.argv: 
-    print arg
+   query+= '"' + arg + '"' + " " 
+
+print query
+# Get String, Surround with '"' and append with space
+# Find and replace space with necessary char
+
+
 
 '''
 Documentation:
 http://localhost:8011/do-search?v=8.0&api=1&q=currentdate+and+time
+Char: +
 
 lists:
 https://lists.marklogic.com/search/?q=possible%20syn%20flooding
+Char: %20
+https://lists.marklogic.com/search/?q=%22possible+syn+flooding%22
+Can work the same way with the '+' Just put a %22 around all
+https://lists.marklogic.com/search/?q=%22possible%22+%22syn%22+%22flooding%22
 
 google:
 prepend marklogic
 https://www.google.com/?gws_rd=ssl#q=marklogic+xdmp
+Char: +
 
 without prepend
 https://www.google.com/?gws_rd=ssl#q=xdmp
+Char: +
 
 tickets-- self-search
 http://supporttools.marklogic.com/tickets?query=syn+cookies
+Char: +
 
 Knowledgebase:
 Use google
 https://www.google.com/search?q=marklogic+knowledgebase+support+dump&ie=utf-8&oe=utf-8
+Char: +
 '''
