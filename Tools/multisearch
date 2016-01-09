@@ -1,0 +1,29 @@
+#!/usr/bin/python
+
+import sys
+from subprocess import call
+
+for arg in sys.argv: 
+    print arg
+
+'''
+Documentation:
+http://localhost:8011/do-search?v=8.0&api=1&q=currentdate+and+time
+
+lists:
+https://lists.marklogic.com/search/?q=possible%20syn%20flooding
+
+google:
+prepend marklogic
+https://www.google.com/?gws_rd=ssl#q=marklogic+xdmp
+
+without prepend
+https://www.google.com/?gws_rd=ssl#q=xdmp
+
+tickets-- self-search
+http://supporttools.marklogic.com/tickets?query=syn+cookies
+
+Knowledgebase:
+Use google
+https://www.google.com/search?q=marklogic+knowledgebase+support+dump&ie=utf-8&oe=utf-8
+'''
