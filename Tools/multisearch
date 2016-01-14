@@ -2,18 +2,34 @@
 
 import sys
 from subprocess import call
+from subprocess import call
 
 query=""
+documentationSrvr="http://localhost:8011/do-search?v=8.0&api=1&q="
+listsSrvr="https://lists.marklogic.com/search/?q="
+google="https://www.google.com/?gws_rd=ssl#q="
+marklogicKeyword="marklogic+"
+knowledgebase="marklogic+knowledgebase+support+"
+supporttools="http://supporttools.marklogic.com/tickets?query="
+
 first=True
+
 for arg in sys.argv: 
    if first == True: 
 	first=False
         continue
    query+= '"' + arg + '"' + " " 
 
-print query
+queryWithPlus=query.replace(" ","+")
+queryWithPlus=queryWithPlus[:-1]
 # Get String, Surround with '"' and append with space
 # Find and replace space with necessary char
+
+call(["open", documentationSrvr+queryWithPlus])
+call(["open", listsSrvr+queryWithPlus])
+call(["open", google+marklogicKeyword+queryWithPlus])
+call(["open", google+queryWithPlus])
+
 
 
 
