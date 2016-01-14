@@ -4,6 +4,7 @@ import sys
 from subprocess import call
 from subprocess import call
 
+
 query=""
 documentationSrvr="http://localhost:8011/do-search?v=8.0&api=1&q="
 listsSrvr="https://lists.marklogic.com/search/?q="
@@ -27,8 +28,10 @@ queryWithPlus=queryWithPlus[:-1]
 
 call(["open", documentationSrvr+queryWithPlus])
 call(["open", listsSrvr+queryWithPlus])
-call(["open", google+marklogicKeyword+queryWithPlus])
-call(["open", google+queryWithPlus])
+call(["open", supporttools+queryWithPlus])
+# call(["open", google+marklogicKeyword+queryWithPlus])
+# call(["open", google+knowledgebase+queryWithPlus])
+# call(["open", google+queryWithPlus])
 
 
 
