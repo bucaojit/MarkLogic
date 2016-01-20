@@ -3,7 +3,10 @@
 import sys
 import webbrowser
 from subprocess import call
-from subprocess import call
+
+if len(sys.argv) < 2:
+	print "Missing search term, exiting"
+	sys.exit(1)
 
 
 query=""
@@ -26,9 +29,9 @@ queryWithPlus=query.replace(" ","+")
 queryWithPlus=queryWithPlus[:-1]
 # Get String, Surround with '"' and append with space
 # Find and replace space with necessary char
-webbrowser.open_new(documentationSrvr+queryWithPlus)
-webbrowser.open_new(listsSrvr+queryWithPlus)
-webbrowser.open_new(supporttools+queryWithPlus)
-webbrowser.open_new(google+marklogicKeyword+queryWithPlus)
-webbrowser.open_new(google+knowledgebase+queryWithPlus )
 webbrowser.open_new(google+queryWithPlus )
+webbrowser.open_new(google+knowledgebase+queryWithPlus )
+webbrowser.open_new(google+marklogicKeyword+queryWithPlus)
+webbrowser.open_new(supporttools+queryWithPlus)
+webbrowser.open_new(listsSrvr+queryWithPlus)
+webbrowser.open_new(documentationSrvr+queryWithPlus)
