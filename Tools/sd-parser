@@ -1,0 +1,14 @@
+#!/usr/bin/python
+
+import sys
+from subprocess import call
+
+# Ideas: 
+#    a) Separate sections into different files
+#       i) Perhaps separate directories for type (database) then file for each
+#    b) Have a summary page, ie CPF enabled - Database names - Version - OS
+#    c) ID to name, which forests belong to what, may not be needed if supporttools
+#    d) Pipelines
+#    e) Use in tandem with the support tools db
+#
+
