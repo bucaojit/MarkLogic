@@ -4,6 +4,9 @@ import re
 import sys
 from subprocess import check_output,call
 
+# Format of properties file:
+# <Address for upload VM>
+# <Address for tools server>
 
 if len(sys.argv) < 3:
 	print "Missing commands, exiting"
@@ -15,8 +18,12 @@ username=check_output("whoami")
 
 properties="/Users/" + username.rstrip() + "/.sd-uploader.prop"
 propFile  =open(properties, "r")
-server=propFile.read().rstrip()
+#server=propFile.read().rstrip()
+server=propFile.read()
+server=server.split('\n')
+uploadServer=server[0]
+toolsServer=server[1]
 
-call(["scp","/Users/" + username.rstrip() +"/Downloads/"+sys.argv[2],server+":/tmp/"])
+call(["scp","/Users/" + username.rstrip() +"/Downloads/"+sys.argv[2],uploadServer+":/tmp/"])
 
-call(["ssh",server,"/var/opt/bin/support-dump.pl -ticket "+sys.argv[1]+" -file /tmp/"+sys.argv[2]+" -uri http://supporttools.marklogic.com"])
+call(["ssh",uploadServer,"/var/opt/bin/support-dump.pl -ticket "+sys.argv[1]+" -file /tmp/"+sys.argv[2]+" -uri "+toolsServer])
