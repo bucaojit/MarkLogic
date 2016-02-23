@@ -24,6 +24,7 @@ server=server.split('\n')
 uploadServer=server[0]
 toolsServer=server[1]
 
-call(["scp",sys.argv[2],uploadServer+":/tmp/"])
+call(["scp","/Users/" + username.rstrip() +"/Downloads/" + sys.argv[2],uploadServer+":/tmp/"])
 
-call(["ssh",uploadServer,"/var/opt/bin/support-dump.pl -ticket "+sys.argv[1]+" -file /tmp/"+sys.argv[2]+" -uri "+toolsServer])
+call(["ssh",uploadServer,"~/bin/support-dump.pl -ticket "+sys.argv[1]+" -file /tmp/"+sys.argv[2]+" -uri "+toolsServer])
+# call(["ssh",uploadServer,"/var/opt/bin/support-dump.pl -ticket "+sys.argv[1]+" -file /tmp/"+sys.argv[2]+" -uri "+toolsServer])
