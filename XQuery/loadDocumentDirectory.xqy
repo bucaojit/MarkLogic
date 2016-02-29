@@ -1,7 +1,7 @@
 xquery version "1.0-ml";
  
 declare namespace directory="http://marklogic.com/xdmp/directory";
-declare variable $DIRECTORY="/tmp/";
+declare variable $DIRECTORY := "/tmp/";
  
 for $entry in xdmp:filesystem-directory($DIRECTORY)//directory:entry
  
