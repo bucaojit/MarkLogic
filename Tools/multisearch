@@ -16,6 +16,7 @@ google="https://www.google.com/?gws_rd=ssl#q="
 marklogicKeyword="marklogic+"
 knowledgebase="marklogic+knowledgebase+support+"
 supporttools="http://supporttools.marklogic.com/tickets?query="
+developerSite="site:developer.marklogic.com"
 
 first=True
 
@@ -29,9 +30,9 @@ queryWithPlus=query.replace(" ","+")
 queryWithPlus=queryWithPlus[:-1]
 # Get String, Surround with '"' and append with space
 # Find and replace space with necessary char
-webbrowser.open_new(google+queryWithPlus )
-webbrowser.open_new(google+knowledgebase+queryWithPlus )
-webbrowser.open_new(google+marklogicKeyword+queryWithPlus)
+webbrowser.open_new(google+queryWithPlus+developerSite)
+webbrowser.open_new(google+knowledgebase+queryWithPlus)
+#webbrowser.open_new(google+marklogicKeyword+queryWithPlus)
 webbrowser.open_new(supporttools+queryWithPlus)
 webbrowser.open_new(listsSrvr+queryWithPlus)
-webbrowser.open_new(documentationSrvr+queryWithPlus)
+#webbrowser.open_new(documentationSrvr+queryWithPlus)
