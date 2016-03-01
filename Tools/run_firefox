@@ -1,0 +1,10 @@
+#!/bin/bash
+# Simple script to run firefox with shared home directory
+
+myPath=`cat ~/.mozilla/firefox/profiles.ini | grep Path | cut -d= -f2`
+echo 'Starting Firefox...'
+
+rm ~/.mozilla/firefox/$myPath/lock > /dev/null 2>&1
+rm ~/.mozilla/firefox/$myPath/.parentlock > /dev/null 2>&1
+
+/usr/bin/firefox &
