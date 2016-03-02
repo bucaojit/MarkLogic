@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+# For now keep in memory
+
+# database.xml -- specify the full path
+
+# Read in support dump <database>{db-name}</database>
+
+# Read in database.xml -- 
+# Where <database>{db-name}
+# Might need to check for an XML library
+
+# OR
+
+# Parse $database and save full database
+# When hit </database> look for <database-name>{name}</database-name>
+
+# if FOUND in destination DB then that's the one to not include 
+# if FOUND in source DB then keep that. 
+
+# Need to consider only keeping after </forests>
+
+# Abort if db isn't found in either, Can have that as initial check
+
+# How to handle inputs -- <src file> <destination file> <database name>
+# Can use parameters, not sure if necessary -- can add later
