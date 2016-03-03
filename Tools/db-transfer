@@ -1,6 +1,58 @@
 #!/usr/bin/perl
 
-# For now keep in memory
+$num_args = $#ARGV + 1;
+if ($num_args != 3) {
+    print "Usage: db-transfer src_path dest_path database_name\n";
+        exit;
+}
+
+local $/=undef;
+open FILE, $ARGV[0] or die "Couldn't open file: $!";
+$source = <FILE>;
+close FILE;
+
+local $/=undef;
+open FILE, $ARGV[1] or die "Couldn't open file: $!";
+$dest= <FILE>;
+close FILE;
+
+$dbName = $ARGV[2];
+
+
+#print "Source: \n$source\n";
+#print "Destination\n$dest\n";
+#print "DB Name:\n$dbName\n";
+
+my @srcLines = split /\n/, $source;
+my @destLines = split /\n/, $dest;
+
+my $linesToAdd;
+my $dbFound = 0;
+my $addText = 0;
+
+foreach my $srcLine (@srcLines) {
+  #Read db-name
+  if($srcLine =~ /<database-name>$dbName<\/database-name>/) {
+    $dbFound=1;
+  }
+  if(($dbFound) && (($srcLine =~ /<\/forests>/) || \
+                    ($srcLine =~ /<forests\/>/))) {
+    $addText=1;
+  }
+  if($addText) {
+    $linesToAdd .= $srcLine;
+    $linesToAdd .= "\n";
+  }
+  if(($addText) && ($srcLine =~ /<\/database>/)) {
+    $addText = 0;
+  }
+}
+
+foreach my $destLine (@destLines) {
+}
+
+print $linesToAdd;
+
 
 # database.xml -- specify the full path
 
