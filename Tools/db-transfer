@@ -2,22 +2,30 @@
 
 $num_args = $#ARGV + 1;
 if ($num_args != 3) {
-    print "Usage: db-transfer src_path dest_path database_name\n";
+    print "Usage: db-transfer <src_path> <dest_path> <database_name>\n";
         exit;
 }
 
+my $srcFilename = $ARGV[0];
+my $destFilename = $ARGV[1];
+my $dbName = $ARGV[2];
+
+
 local $/=undef;
-open FILE, $ARGV[0] or die "Couldn't open file: $!";
+open FILE, $srcFilename or die "Couldn't open file: $!";
 $source = <FILE>;
 close FILE;
 
 local $/=undef;
-open FILE, $ARGV[1] or die "Couldn't open file: $!";
+open FILE, $destFilename or die "Couldn't open file: $!";
 $dest= <FILE>;
 close FILE;
 
-$dbName = $ARGV[2];
-
+# Copy to backup
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
+#$timestamp = chomp($timestamp);
+`cp $destFilename /tmp/database$mday$hour$min$sec.xml`;
+print "Copied $destFilename to /tmp/databases$mday$hour$min$sec.xml\n";
 
 #print "Source: \n$source\n";
 #print "Destination\n$dest\n";
@@ -35,44 +43,69 @@ foreach my $srcLine (@srcLines) {
   if($srcLine =~ /<database-name>$dbName<\/database-name>/) {
     $dbFound=1;
   }
-  if(($dbFound) && (($srcLine =~ /<\/forests>/) || \
-                    ($srcLine =~ /<forests\/>/))) {
-    $addText=1;
-  }
   if($addText) {
     $linesToAdd .= $srcLine;
     $linesToAdd .= "\n";
   }
+  if((($srcLine =~ /<\/forests>/) || ($srcLine =~ /<forests\/>/)) && ($dbFound)) {
+    $addText=1;
+  }
   if(($addText) && ($srcLine =~ /<\/database>/)) {
-    $addText = 0;
+    last;
   }
 }
 
-foreach my $destLine (@destLines) {
+if($dbFound == 0) {
+  print "$dbName does not exist in $srcFilename\n";
+  exit 1;
 }
 
-print $linesToAdd;
+my $priorToDB;
+my $afterDB;
+my $toWriteOut;
+my $copyForDestPre = 1;
+my $copyForDestPost= 0;
+my $destDbFound = 0;
+my $destForestEnd = 0;
 
+$count = 1;
+foreach my $destLine (@destLines) {
+  $count += 1;
+  if($destLine =~ /<database-name>$dbName<\/database-name>/) {
+    $destDbFound = 1;
+  }
+  if($copyForDestPre) {
+    $priorToDB .= $destLine;
+    $priorToDB .= "\n";
+  }
+  if((($destLine =~ /<\/forests>/) || ($destLine =~ /<forests\/>/)) && ($destDbFound)) {
+    $destForestEnd = 1;
+    $copyForDestPre = 0;
+  }
+  if($copyForDestPost) {
+    $afterDB .= $destLine;
+    $afterDB .= "\n";
+  }
+  if(($destLine =~ /<\/database>/) && ($destDbFound)) {
+    $copyForDestPost = 1;
+  }
+}
 
-# database.xml -- specify the full path
+if($destDbFound == 0) {
+  print "$dbName does not exist in $destFilename\n";
+  exit 1;
+}
 
-# Read in support dump <database>{db-name}</database>
+# print "prior to DB: \n$priorToDB";
+# print "Lines to add:\n$linesToAdd";
+# print "after DB: \n$afterDB";
 
-# Read in database.xml -- 
-# Where <database>{db-name}
-# Might need to check for an XML library
+open(my $filehandle, '>', $destFilename) or die "Could not open file '$destFilename' $!";
 
-# OR
+print $filehandle $priorToDB;
+print $filehandle $linesToAdd;
+print $filehandle $afterDB;
 
-# Parse $database and save full database
-# When hit </database> look for <database-name>{name}</database-name>
+close $filehandle;
 
-# if FOUND in destination DB then that's the one to not include 
-# if FOUND in source DB then keep that. 
-
-# Need to consider only keeping after </forests>
-
-# Abort if db isn't found in either, Can have that as initial check
-
-# How to handle inputs -- <src file> <destination file> <database name>
-# Can use parameters, not sure if necessary -- can add later
+print "Completed copying $dbName from $srcFilename to $destFilename\n";
