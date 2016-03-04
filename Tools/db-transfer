@@ -6,6 +6,8 @@ if ($num_args != 3) {
         exit;
 }
 
+my $tempDir = "/tmp";
+
 my $srcFilename = $ARGV[0];
 my $destFilename = $ARGV[1];
 my $dbName = $ARGV[2];
@@ -16,23 +18,7 @@ open FILE, $srcFilename or die "Couldn't open file: $!";
 $source = <FILE>;
 close FILE;
 
-local $/=undef;
-open FILE, $destFilename or die "Couldn't open file: $!";
-$dest= <FILE>;
-close FILE;
-
-# Copy to backup
-($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
-#$timestamp = chomp($timestamp);
-`cp $destFilename /tmp/database$mday$hour$min$sec.xml`;
-print "Copied $destFilename to /tmp/databases$mday$hour$min$sec.xml\n";
-
-#print "Source: \n$source\n";
-#print "Destination\n$dest\n";
-#print "DB Name:\n$dbName\n";
-
 my @srcLines = split /\n/, $source;
-my @destLines = split /\n/, $dest;
 
 my $linesToAdd;
 my $dbFound = 0;
@@ -59,6 +45,22 @@ if($dbFound == 0) {
   print "$dbName does not exist in $srcFilename\n";
   exit 1;
 }
+
+$source = ();
+@srcLines = ();
+
+local $/=undef;
+open FILE, $destFilename or die "Couldn't open file: $!";
+$dest= <FILE>;
+close FILE;
+
+# Copy to backup
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
+#$timestamp = chomp($timestamp);
+`cp $destFilename $tempDir/database$mday$hour$min$sec.xml`;
+print "Copied $destFilename to $tempDir/databases$mday$hour$min$sec.xml\n";
+
+my @destLines = split /\n/, $dest;
 
 my $priorToDB;
 my $afterDB;
