@@ -1,8 +1,24 @@
 #!/usr/bin/perl
 
+# Usage: dbconfig-transfer <src_path> <dest_path> <database_name>
+#
+# Script is used to transfer the database configuration from a support request/dump
+# into the databases.xml file of a running MarkLogic instance.  
+# 
+# To use: 
+# 1. Identify the database name in the support dump to copy.  
+# 2. On destination instance, create a database with the same name
+#    a. You may create forests before or after the transfer
+# 3. Run tool to transfer database config from support dump
+# 4. Restart MarkLogic instance, review the configuration changes
+#
+# Note: Script likely needs to run as 'sudo' in order to modify MarkLogic config files
+#
+
+
 $num_args = $#ARGV + 1;
 if ($num_args != 3) {
-    print "Usage: db-transfer <src_path> <dest_path> <database_name>\n";
+    print "Usage: dbconfig-transfer <src_path> <dest_path> <database_name>\n";
         exit;
 }
 
