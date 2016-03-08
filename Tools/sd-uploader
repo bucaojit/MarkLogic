@@ -4,9 +4,13 @@ import re
 import sys
 from subprocess import check_output,call
 
+# Properties filename ~/.sd-uploader.prop
 # Format of properties file:
 # <Address for upload VM>
 # <Address for tools server>
+#
+# Where vm is where the support-dump.pl script resides with necessary libraries installed
+# Address is where the support-request will be uploaded to
 
 if len(sys.argv) < 3:
 	print "Missing commands, exiting"
@@ -27,4 +31,3 @@ toolsServer=server[1]
 call(["scp","/Users/" + username.rstrip() +"/Downloads/" + sys.argv[2],uploadServer+":/tmp/"])
 
 call(["ssh",uploadServer,"~/bin/support-dump.pl -ticket "+sys.argv[1]+" -file /tmp/"+sys.argv[2]+" -uri "+toolsServer])
-# call(["ssh",uploadServer,"/var/opt/bin/support-dump.pl -ticket "+sys.argv[1]+" -file /tmp/"+sys.argv[2]+" -uri "+toolsServer])
