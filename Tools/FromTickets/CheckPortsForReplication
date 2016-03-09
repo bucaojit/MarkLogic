@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Default foreign host port is 7998 so that needs to work
+nc -z $1 7996-8010
+output=`nc -z $1 7996-8010`
+grepRes=`echo $output | grep 7998`
+
+if [ $? -ne 0 ]; then
+   echo "Problem with network connection with foreign host port: 7998"
+else
+   echo "Connection to foreign host port working"
+fi
