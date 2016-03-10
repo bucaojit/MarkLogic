@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 import sys
 import webbrowser
 from subprocess import call
@@ -30,9 +29,13 @@ queryWithPlus=query.replace(" ","+")
 queryWithPlus=queryWithPlus[:-1]
 # Get String, Surround with '"' and append with space
 # Find and replace space with necessary char
-webbrowser.open_new(google+queryWithPlus+developerSite)
+webbrowser.open_new(google+queryWithPlus+"+"+developerSite)
 webbrowser.open_new(google+knowledgebase+queryWithPlus)
 #webbrowser.open_new(google+marklogicKeyword+queryWithPlus)
 webbrowser.open_new(supporttools+queryWithPlus)
 webbrowser.open_new(listsSrvr+queryWithPlus)
 #webbrowser.open_new(documentationSrvr+queryWithPlus)
+
+# Add for bugtrack
+# Quality of results
+# Save useful history
