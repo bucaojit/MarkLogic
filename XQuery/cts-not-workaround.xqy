@@ -1,5 +1,14 @@
 xquery version "1.0-ml";
 
+(:
+    cts-not() constructor is as accurate as the unfiltered underlying
+    query.  As such, this can yield false positive results as the
+    unfiltered search is based off index resolution.  For guaranteed
+    results, the query has to be rewritten to not make use of cts-not().
+
+    Other workarounds may be to modify index settings
+:)
+
 xdmp:document-insert("/cts-test/doc1",  
                      <document> Hello World </document>
                      );
