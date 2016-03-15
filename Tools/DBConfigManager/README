@@ -1,0 +1,4 @@
+Tool is used to extract the named <database /> configuration from a support dump and import it to the specified databases.xml file.
+
+Next iterations will export the database as an importable package.  
+Also intend to develop a way to persist these packages and access them through a UI in order to import different database configurations based on tickets or customer.
