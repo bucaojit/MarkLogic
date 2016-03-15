@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Create initial private key
+openssl genrsa -out mykey.key 2048
+
+# Generate Certificate Sign Request
+openssl req -new -out mycsr.csr -key mykey.key -config openssl.cnf
+
+# Read back the request
+openssl req -text -noout -in mycsr.csr
+
+# Sign and create the certificate
+openssl x509 -req -days 10 -in mycsr.csr -signkey mykey.key \
+ -out mycert.crt -extensions v3_req -extfile openssl.cnf
+
+# If you need to package key and cert 
+openssl pkcs12 -export -in mycert.crt -inkey mykey.key \
+ -out myp12.p12
+
+# Converting a pkcs12 format to pem - 
+# (Public-Key Cryptography Standards variant 12 to Privacy Enhancement Mail)
+openssl pkcs12 -in myp12.p12 -out mypem.pem -nodes
+
+# To decrypt and read the certificate file:
+openssl x509 -in mycert.crt -text -noout
+
+
+# Example of openssl.cnf
+# http://www.tldp.org/LDP/solrhe/Securing-Optimizing-Linux-RH-Edition-v1.3/chap24sec194.html
