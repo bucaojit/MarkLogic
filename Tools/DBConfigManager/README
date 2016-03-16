@@ -2,3 +2,11 @@ Tool is used to extract the named <database /> configuration from a support dump
 
 Next iterations will export the database as an importable package.  
 Also intend to develop a way to persist these packages and access them through a UI in order to import different database configurations based on tickets or customer.
+
+--
+
+Importable package includes:
+metadata.xml
+<database-name>.xml
+
+Database config is similar to the support dump, adds 'links' and other xml entries
